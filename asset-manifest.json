@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/BasketballShootPerformanceAnalysis/static/js/main.faba9f5d.js",
+    "main.js": "/BasketballShootPerformanceAnalysis/static/js/main.fe3889f6.js",
     "index.html": "/BasketballShootPerformanceAnalysis/index.html",
-    "main.faba9f5d.js.map": "/BasketballShootPerformanceAnalysis/static/js/main.faba9f5d.js.map"
+    "main.fe3889f6.js.map": "/BasketballShootPerformanceAnalysis/static/js/main.fe3889f6.js.map"
   },
   "entrypoints": [
-    "static/js/main.faba9f5d.js"
+    "static/js/main.fe3889f6.js"
   ]
 }
