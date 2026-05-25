@@ -1,7 +1,7 @@
 {
     "name": "nba-shot-explorer-frontend",
     "version": "1.0.0",
-    "homepage": "https://ShibaharaHiroki.github.io/BasketballShootPerformanceAnalysis",
+    "homepage": "https://ShibaharaHiroki.github.io/BasketballShootPerformanceAnalysisWeb",
     "private": true,
     "dependencies": {
         "@chakra-ui/icons": "^2.2.4",
@@ -28,7 +28,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build -r https://github.com/ShibaharaHiroki/BasketballShootPerformanceAnalysis.git",
+        "deploy": "gh-pages -d build -r https://github.com/ShibaharaHiroki/BasketballShootPerformanceAnalysisWeb.git",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
