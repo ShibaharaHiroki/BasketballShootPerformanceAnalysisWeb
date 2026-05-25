@@ -1,0 +1,138 @@
+﻿node : node:internal
+/modules/cjs/loader:
+1424
+At line:1 char:48
++ ... -provider'; no
+de node_modules/reac
+t-scripts/scripts/bu
+ild.js 2>&1 | O ...
++                 ~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (node   
+ :internal/modul    
+es/cjs/loader:1    4
+24:String) [],     R
+emoteExceptio    n
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+  throw err;
+  ^
+
+Error: Cannot find m
+odule 'underscore'
+Require stack:
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\jsonpath\lib\ha
+ndlers.js
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\jsonpath\lib\in
+dex.js
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\jsonpath\index.
+js
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\bfj\src\match.j
+s
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\bfj\src\index.j
+s
+- D:\BasketballShoot
+PerformanceAnalysisW
+eb\frontend\node_mod
+ules\react-scripts\s
+cripts\build.js
+    at Module._resol
+veFilename (node:int
+ernal/modules/cjs/lo
+ader:1421:15)
+    at defaultResolv
+eImpl (node:internal
+/modules/cjs/loader:
+1059:19)
+    at resolveForCJS
+WithHooks (node:inte
+rnal/modules/cjs/loa
+der:1064:22)
+    at Module._load 
+(node:internal/modul
+es/cjs/loader:1227:3
+7)
+    at TracingChanne
+l.traceSync (node:di
+agnostics_channel:32
+8:14)
+    at wrapModuleLoa
+d (node:internal/mod
+ules/cjs/loader:245:
+24)
+    at Module.requir
+e (node:internal/mod
+ules/cjs/loader:1504
+:12)
+    at require (node
+:internal/modules/he
+lpers:152:16)
+    at Object.<anony
+mous> (D:\Basketball
+ShootPerformanceAnal
+ysisWeb\frontend\nod
+e_modules\jsonpath\l
+ib\handlers.js:4:13)
+    at Module._compi
+le (node:internal/mo
+dules/cjs/loader:176
+1:14) {
+  code: 'MODULE_NOT_
+FOUND',
+  requireStack: [
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\jsonpath
+\\lib\\handlers.js',
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\jsonpath
+\\lib\\index.js',
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\jsonpath
+\\index.js',
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\bfj\\src
+\\match.js',
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\bfj\\src
+\\index.js',
+    'D:\\BasketballS
+hootPerformanceAnaly
+sisWeb\\frontend\\no
+de_modules\\react-sc
+ripts\\scripts\\buil
+d.js'
+  ]
+}
+
+Node.js v24.12.0
