@@ -12,6 +12,47 @@ import numpy as np
 import pandas as pd
 
 
+# Directory where pre-built .npy cache files are stored
+_CACHE_DIR = Path(__file__).parent.parent / "data"
+
+
+def _npy_cache_base(season: int) -> Path:
+    """Return the base path (without suffix) for a season's npy cache files."""
+    return _CACHE_DIR / f"nba_shotdetail_{season}"
+
+
+def _load_df_from_npy(season: int) -> "pd.DataFrame | None":
+    """
+    Load a cached NBA shot DataFrame from .npy files.
+    Returns None if the cache does not exist.
+    """
+    base = _npy_cache_base(season)
+    data_path = Path(str(base) + "_data.npy")
+    cols_path = Path(str(base) + "_cols.txt")
+    dtypes_path = Path(str(base) + "_dtypes.txt")
+
+    if not data_path.exists():
+        return None
+
+    values = np.load(data_path, allow_pickle=True)
+    columns = cols_path.read_text(encoding="utf-8").strip().splitlines()
+    dtype_strs = dtypes_path.read_text(encoding="utf-8").strip().splitlines()
+
+    df = pd.DataFrame(values, columns=columns)
+
+    # Restore numeric dtypes
+    for col, dtype_str in zip(columns, dtype_strs):
+        try:
+            if "int" in dtype_str:
+                df[col] = pd.to_numeric(df[col], errors="coerce").astype("Int64")
+            elif "float" in dtype_str:
+                df[col] = pd.to_numeric(df[col], errors="coerce").astype("float64")
+        except Exception:
+            pass
+
+    return df
+
+
 def load_nba_data(
     path: "Path | str" = Path.cwd(),
     seasons=(2022,),
@@ -20,10 +61,11 @@ def load_nba_data(
     league: str = "nba",
     in_memory: bool = True,
     use_pandas: bool = True,
+    use_cache: bool = True,
 ) -> pd.DataFrame:
     """
-    Load NBA data from public GitHub repository.
-    
+    Load NBA data from .npy cache files if available, otherwise download from GitHub.
+
     Args:
         path: Working directory path
         seasons: Tuple of season years
@@ -32,12 +74,61 @@ def load_nba_data(
         league: "nba" or "wnba"
         in_memory: Whether to load data in memory
         use_pandas: Whether to use pandas DataFrame
-        
+        use_cache: If True (default), try to load from .npy cache before downloading
+
     Returns:
         DataFrame with NBA shot data
     """
     if isinstance(path, str):
         path = Path(path).expanduser()
+    if isinstance(seasons, int):
+        seasons = (seasons,)
+    if isinstance(data, str):
+        data = (data,)
+
+    # --- .npy cache fast path ---
+    # Only supported for single shotdetail data type, regular season, NBA
+    if (
+        use_cache
+        and league.lower() == "nba"
+        and seasontype == "rg"
+        and set(data) == {"shotdetail"}
+    ):
+        cached_frames = []
+        missing_seasons = []
+        for season in seasons:
+            df_cached = _load_df_from_npy(season)
+            if df_cached is not None:
+                print(f"[cache] Loaded season {season} from .npy cache ({len(df_cached)} rows).")
+                cached_frames.append(df_cached)
+            else:
+                missing_seasons.append(season)
+
+        if not missing_seasons:
+            # All seasons were cached
+            return pd.concat(cached_frames, axis=0, ignore_index=True)
+
+        # Some seasons missing: download them
+        print(f"[cache] Seasons not cached, downloading: {missing_seasons}")
+        downloaded = _download_nba_data(missing_seasons, data, seasontype, league, in_memory, use_pandas)
+        all_frames = cached_frames + [downloaded]
+        return pd.concat(all_frames, axis=0, ignore_index=True)
+
+    # --- No cache: download directly ---
+    return _download_nba_data(list(seasons), data, seasontype, league, in_memory, use_pandas)
+
+
+def _download_nba_data(
+    seasons,
+    data,
+    seasontype: str = "rg",
+    league: str = "nba",
+    in_memory: bool = True,
+    use_pandas: bool = True,
+) -> pd.DataFrame:
+    """
+    Internal: download NBA data from GitHub (original implementation).
+    """
     if isinstance(seasons, int):
         seasons = (seasons,)
     if isinstance(data, str):

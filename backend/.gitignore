@@ -22,3 +22,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# NBA data cache (.npy files built by build_nba_cache.py)
+data/
