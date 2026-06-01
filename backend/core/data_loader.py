@@ -41,11 +41,10 @@ def _load_df_from_npy(season: int) -> "pd.DataFrame | None":
     df = pd.DataFrame(values, columns=columns)
 
     # Restore numeric dtypes
+    # Use float64 for all numeric columns (int64 nullable causes numpy incompatibility)
     for col, dtype_str in zip(columns, dtype_strs):
         try:
-            if "int" in dtype_str:
-                df[col] = pd.to_numeric(df[col], errors="coerce").astype("Int64")
-            elif "float" in dtype_str:
+            if "int" in dtype_str or "float" in dtype_str:
                 df[col] = pd.to_numeric(df[col], errors="coerce").astype("float64")
         except Exception:
             pass
