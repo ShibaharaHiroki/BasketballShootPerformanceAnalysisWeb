@@ -3,7 +3,7 @@ services:
     name: basketball-shot-api
     runtime: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && python build_nba_cache.py --seasons 2022
+    buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
